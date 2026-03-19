@@ -114,24 +114,7 @@ function draw() {
   overlayTextDiv.textContent = name;
 }
 
-// Pengelolaan frame dinamis
-window.addEventListener('DOMContentLoaded', () => {
-  fetch('frames/')
-    .then(r => r.text())
-    .then(html => {
-      // Parse file list dari directory listing (hanya jika server mengizinkan)
-      const files = Array.from(html.matchAll(/href="([^"]+\.(png|jpg|jpeg|webp))"/gi)).map(m => m[1]);
-      const select = document.getElementById('frameSelect');
-      // Hapus option lama kecuali pertama
-      while(select.options.length > 1) select.remove(1);
-      files.forEach(f => {
-        const opt = document.createElement('option');
-        opt.value = f;
-        opt.textContent = f.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-        select.appendChild(opt);
-      });
-    });
-});
+// Pengelolaan frame: Tambahkan file frame ke folder 'frames/' dan daftarkan manual di index.html dropdown.
 function downloadImage() {
   const link = document.createElement('a');
   link.download = 'twibbon.png';
