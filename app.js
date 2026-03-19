@@ -75,7 +75,7 @@ window.addEventListener('touchend', () => { drag = false; });
 function draw() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // Crop lingkaran
+  // Crop lingkaran untuk foto
   ctx.save();
   ctx.beginPath();
   ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2, 0, 2 * Math.PI);
@@ -96,8 +96,16 @@ function draw() {
   }
   ctx.restore();
 
+  // Gambar frame dengan aspect ratio asli, center
   if(frame.src && frame.naturalWidth && frame.naturalHeight) {
-    ctx.drawImage(frame,0,0,canvas.width,canvas.height);
+    let fw = frame.naturalWidth;
+    let fh = frame.naturalHeight;
+    let scale = Math.min(canvas.width/fw, canvas.height/fh);
+    let dw = fw * scale;
+    let dh = fh * scale;
+    let dx = (canvas.width - dw) / 2;
+    let dy = (canvas.height - dh) / 2;
+    ctx.drawImage(frame, 0, 0, fw, fh, dx, dy, dw, dh);
   }
 
   // Overlay nama user
