@@ -3,7 +3,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const overlayTextDiv = document.getElementById('overlayText');
 const userNameInput = document.getElementById('userName');
-const campaignUrlSpan = document.getElementById('campaignUrl');
 
 let photo = new Image();
 let frame = new Image();
@@ -12,14 +11,6 @@ let offsetX = 0, offsetY = 0;
 let drag = false;
 let dragStart = {x: 0, y: 0};
 let imgPos = {x: 0, y: 0};
-
-// Campaign URL dinamis dari hash
-function updateCampaignUrl() {
-  const hash = window.location.hash.replace('#', '');
-  campaignUrlSpan.textContent = hash ? '/' + hash : '/event-mtc-bali';
-}
-window.addEventListener('hashchange', updateCampaignUrl);
-updateCampaignUrl();
 
 document.getElementById('photoInput').addEventListener('change', e => {
   const reader = new FileReader();
