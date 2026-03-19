@@ -34,12 +34,12 @@
       <label>Zoom</label>
       <input type="range" id="zoom" min="0.5" max="3" step="0.01" value="1" class="w-full mb-3">
 
-      <div class="flex gap-2 mb-3">
+      <div class="mb-3 flex flex-col gap-2">
         <button onclick="downloadImage()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">
-          Download
+          Download PNG
         </button>
-        <button id="shareFb" class="bg-blue-500 text-white px-4 py-2 rounded w-full">
-          Share FB
+        <button onclick="downloadJPG50()" class="bg-green-600 text-white px-4 py-2 rounded w-full">
+          Download JPG (50%)
         </button>
       </div>
 
@@ -57,5 +57,22 @@
 </div>
 
 <script src="app.js"></script>
+<script>
+function downloadJPG50() {
+  const canvas = document.getElementById('canvas');
+  // Buat canvas baru dengan ukuran 50%
+  const w = Math.round(canvas.width / 2);
+  const h = Math.round(canvas.height / 2);
+  const temp = document.createElement('canvas');
+  temp.width = w;
+  temp.height = h;
+  const tctx = temp.getContext('2d');
+  tctx.drawImage(canvas, 0, 0, w, h);
+  const link = document.createElement('a');
+  link.download = 'twibbon.jpg';
+  link.href = temp.toDataURL('image/jpeg', 0.8);
+  link.click();
+}
+</script>
 </body>
 </html>
