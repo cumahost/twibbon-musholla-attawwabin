@@ -26,7 +26,12 @@ document.getElementById('photoInput').addEventListener('change', e => {
 
 document.getElementById('frameSelect').addEventListener('change', e => {
   frame.src = 'frames/' + e.target.value;
-  frame.onload = draw;
+  frame.onload = () => {
+    // Ubah ukuran canvas sesuai frame
+    canvas.width = frame.naturalWidth;
+    canvas.height = frame.naturalHeight;
+    draw();
+  };
 });
 
 document.getElementById('zoom').addEventListener('input', e => {
@@ -78,16 +83,17 @@ function draw() {
   // Crop lingkaran untuk foto
   ctx.save();
   ctx.beginPath();
-  ctx.arc(canvas.width/2, canvas.height/2, canvas.width/2, 0, 2 * Math.PI);
+  ctx.arc(canvas.width/2, canvas.height/2, Math.min(canvas.width, canvas.height)/2, 0, 2 * Math.PI);
   ctx.closePath();
   ctx.clip();
 
   if(photo.src && photo.naturalWidth && photo.naturalHeight) {
     // Jaga aspect ratio foto
-    let scale = Math.max(
+    let baseScale = Math.max(
       canvas.width / photo.naturalWidth,
       canvas.height / photo.naturalHeight
-    ) * zoom;
+    );
+    let scale = baseScale * zoom;
     let w = photo.naturalWidth * scale;
     let h = photo.naturalHeight * scale;
     let x = (canvas.width - w) / 2 + imgPos.x;
@@ -96,7 +102,7 @@ function draw() {
   }
   ctx.restore();
 
-  // Gambar frame memenuhi canvas (tanpa space kosong)
+  // Gambar frame memenuhi canvas
   if(frame.src && frame.naturalWidth && frame.naturalHeight) {
     ctx.drawImage(frame, 0, 0, frame.naturalWidth, frame.naturalHeight, 0, 0, canvas.width, canvas.height);
   }
@@ -114,9 +120,4 @@ function downloadImage() {
   link.click();
 }
 
-// Share ke Facebook
-document.getElementById('shareFb').addEventListener('click', function() {
-  const url = window.location.origin + window.location.pathname + window.location.hash;
-  const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-  window.open(shareUrl, '_blank');
-});
+
