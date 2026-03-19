@@ -15,7 +15,7 @@
   <div class="grid md:grid-cols-2 gap-4">
 
     <div class="bg-white p-4 rounded-xl shadow">
-      <input type="file" id="photoInput" class="mb-4" accept="image/*">
+      <input type="file" id="photoInput" class="mb-4 w-full" accept="image/*">
 
       <select id="frameSelect" class="w-full p-2 border mb-4">
         <option value="">Pilih Frame</option>
@@ -23,16 +23,28 @@
         <option value="frame2.png">Frame 2</option>
       </select>
 
+      <input type="text" id="userName" placeholder="Nama kamu (opsional)" class="w-full p-2 border mb-4">
+
       <label>Zoom</label>
       <input type="range" id="zoom" min="1" max="3" step="0.1" value="1" class="w-full mb-3">
 
-      <button onclick="downloadImage()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">
-        Download
-      </button>
+      <div class="flex gap-2 mb-3">
+        <button onclick="downloadImage()" class="bg-blue-600 text-white px-4 py-2 rounded w-full">
+          Download
+        </button>
+        <button id="shareFb" class="bg-blue-500 text-white px-4 py-2 rounded w-full">
+          Share FB
+        </button>
+      </div>
+
+      <div class="text-xs text-gray-500">URL Campaign: <span id="campaignUrl">/event-mtc-bali</span></div>
     </div>
 
     <div class="bg-white p-4 rounded-xl shadow flex justify-center items-center">
-      <canvas id="canvas" width="1080" height="1080"></canvas>
+      <div id="canvas-drag-area">
+        <canvas id="canvas" width="1080" height="1080"></canvas>
+        <div id="overlayText" class="overlay-text"></div>
+      </div>
     </div>
 
   </div>
