@@ -96,16 +96,9 @@ function draw() {
   }
   ctx.restore();
 
-  // Gambar frame dengan aspect ratio asli, center
+  // Gambar frame memenuhi canvas (tanpa space kosong)
   if(frame.src && frame.naturalWidth && frame.naturalHeight) {
-    let fw = frame.naturalWidth;
-    let fh = frame.naturalHeight;
-    let scale = Math.min(canvas.width/fw, canvas.height/fh);
-    let dw = fw * scale;
-    let dh = fh * scale;
-    let dx = (canvas.width - dw) / 2;
-    let dy = (canvas.height - dh) / 2;
-    ctx.drawImage(frame, 0, 0, fw, fh, dx, dy, dw, dh);
+    ctx.drawImage(frame, 0, 0, frame.naturalWidth, frame.naturalHeight, 0, 0, canvas.width, canvas.height);
   }
 
   // Overlay nama user
